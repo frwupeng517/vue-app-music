@@ -2,7 +2,13 @@
     <div class="recommed">
         <div class="recommend-content">
             <div class="slider-wrapper">
-
+                <slider>
+                    <div v-for="(item, index) in recommends">
+                        <a :href="item.linkUrl">
+                            <img :src="item.picUrl" alt="">
+                        </a>
+                    </div>
+                </slider>
             </div>
             <div class="recommend-list">
                 <h1 class="list-title">热门歌单推荐</h1>
@@ -15,8 +21,9 @@
 </template>
 
 <script>
-import {getRecommend, getDiscList} from 'api/recommend'
+import {getRecommend} from 'api/recommend'
 import {ERR_OK} from 'api/config'
+import Slider from 'base/slider/slider'
 export default {
     data () {
         return {
@@ -24,30 +31,30 @@ export default {
             discList: []
         }
     },
+    components: {
+        Slider
+    },
     created () {
         this._getRecommend()
-        this._getDiscList()
+        // this._getDiscList()
     },
     methods: {
         _getRecommend () {
             getRecommend().then((res) => {
                 if (res.code === ERR_OK) {
                     this.recommends = res.data.slider
-                    console.log(res)
+                    console.log(this.recommends)
                 }
             })
-        },
-        _getDiscList () {
-            getDiscList().then((res) => {
-                if (res.code === ERR_OK) {
-                    this.discList = res.data.list
-                    console.log(`this.discList${this.discList}`)
-                }
-            })
-        },
-        test () {
-            alert(1)
         }
+        // _getDiscList () {
+        //     getDiscList().then((res) => {
+        //         if (res.code === ERR_OK) {
+        //             this.discList = res.data.list
+        //             console.log(`this.discList${this.discList}`)
+        //         }
+        //     })
+        // },
     }
 }
 </script>
