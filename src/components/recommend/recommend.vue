@@ -15,8 +15,40 @@
 </template>
 
 <script>
+import {getRecommend, getDiscList} from 'api/recommend'
+import {ERR_OK} from 'api/config'
 export default {
-  
+    data () {
+        return {
+            recommends: [],
+            discList: []
+        }
+    },
+    created () {
+        this._getRecommend()
+        this._getDiscList()
+    },
+    methods: {
+        _getRecommend () {
+            getRecommend().then((res) => {
+                if (res.code === ERR_OK) {
+                    this.recommends = res.data.slider
+                    console.log(res)
+                }
+            })
+        },
+        _getDiscList () {
+            getDiscList().then((res) => {
+                if (res.code === ERR_OK) {
+                    this.discList = res.data.list
+                    console.log(`this.discList${this.discList}`)
+                }
+            })
+        },
+        test () {
+            alert(1)
+        }
+    }
 }
 </script>
 
@@ -72,12 +104,12 @@ export default {
                 }
             }
         }
-    }
-    .loading-container{
-        position: absolute;
-        width: 100%;
-        top: 50%;
-        transform: translateY(-50%);
+        .loading-container{
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     }
 }
 </style>
