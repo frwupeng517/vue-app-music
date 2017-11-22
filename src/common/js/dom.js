@@ -1,4 +1,4 @@
-export default function addClass(el, className) {
+export default function addClass (el, className) {
     if (hasClass(el, className)) {
         return
     }

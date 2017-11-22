@@ -1,7 +1,7 @@
 <template>
-    <div class="recommed">
+    <div class="recommend" ref="recommend">
         <div class="recommend-content">
-            <div class="slider-wrapper">
+            <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
                 <slider>
                     <div v-for="(item, index) in recommends">
                         <a :href="item.linkUrl">
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 import {getRecommend} from 'api/recommend'
 import {ERR_OK} from 'api/config'
 import Slider from 'base/slider/slider'
