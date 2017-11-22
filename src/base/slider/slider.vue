@@ -25,11 +25,17 @@ export default {
             default: 4000
         }
     },
+    data () {
+        return {
+            currentPageIndex: 0
+        }
+    },
     mounted () {
         console.log(1)
         setTimeout(() => {
             this._setSliderWidth()
             this._initSlider()
+            this._play()
         }, 20)
     },
     methods: {
@@ -44,10 +50,10 @@ export default {
                 let child = this.children[i]
                 addClass(child, 'slider-item')
                 child.style.width = sliderWidth + 'px'
-                width += sliderWidth + 'px'
+                width += sliderWidth 
             }
             if (this.loop) { // 如果开启循环轮播
-                width += 2 * sliderWidth + 'px' // 为了营造无缝轮播的效果，会把首图和尾图各复制一份
+                width += 2 * sliderWidth // 为了营造无缝轮播的效果，会把首图和尾图各复制一份
             }
             this.$refs.sliderGroup.style.width = width + 'px'
         },
@@ -57,15 +63,41 @@ export default {
                 scrollX: true, // 当设置为 true 的时候，可以开启横向滚动
                 scrollY: false,
                 momentum: true, // 当快速在屏幕上滑动一段距离的时候，会根据滑动的距离和时间计算出动量，并生成滚动动画。设置为 true 则开启动画
-                snap: {
-                    loop: this.loop,
-                    threshold: 0.3,
-                    speed: 400
-                }
+                snap: true,
+                snapLoop: this.loop,
+                snapThreshold: 0.3,
+                snapSpeed: 400
             })
-            // this.slider.on('scrollEnd', () => {
-
-            // })
+            this.slider.on('scrollEnd', () => {
+                let pageIndex = this.slider.getCurrentPage.pageX
+                if (this.loop) {
+                    pageIndex -= 1
+                }
+                this.currentPageIndex = pageIndex
+                if (this.autoPlay) {
+                    this._play()
+                }
+                /* scrollEnd 触发时机：滚动结束。
+                    参数：{Object} {x, y} 滚动结束的位置坐标
+                */
+                /* getCurrentPage() 获取当前页面的信息
+                    返回值：{Object} { x: posX, y: posY,pageX: x, pageY: y} 其中，x 和 y 表示偏移的坐标值，
+                    pageX 和 pageY 表示横轴方向和纵轴方向的页面数
+                */
+            })
+        },
+        // 自动播放
+        _play () {
+            let pageIndex = this.currentPageIndex + 1
+            if (this.autoPlay) {
+                pageIndex += 1
+            }
+            this.timer = setTimeout(() => {
+                this.slider.goToPage(pageIndex, 0, 400)
+            }, this.interval)
+            /* goToPage(x, y, time, easing) 用于滚动到指定的页面
+                x: x轴的页数，y：y轴的页数，time：动画执行的时间，easing：缓动函数
+            */
         }
     }
 }
