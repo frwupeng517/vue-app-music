@@ -40,18 +40,18 @@ export default {
             this._initSlider()
             this._play()
         }, 20)
-        // 屏幕大小改变时图片的大小没有改变，造成粘连的效果
+        // 给窗口添加resize事件，屏幕大小改变时图片的大小没有改变，造成粘连的效果
         window.addEventListener('resize', () => {
             if (!this.slider) {
                 return
             }
-            this._setSliderWidth()
+            this._setSliderWidth(true) // isResize 每次窗口大小改变会重新计算宽度，宽度就会加2张，为了避免所以这里取值为true
             this.slider.refresh()
         })
     },
     methods: {
         // 计算轮播图所有图片的宽度
-        _setSliderWidth () {
+        _setSliderWidth (isResize) {
             this.children = this.$refs.sliderGroup.children  // Dom 扩展 children: 只包含元素中同样还是元素的子节点
             // 轮播图的总长度
             let width = 0
@@ -63,7 +63,7 @@ export default {
                 child.style.width = sliderWidth + 'px'
                 width += sliderWidth 
             }
-            if (this.loop) { // 如果开启循环轮播
+            if (this.loop && !isResize) { // 如果开启循环轮播
                 width += 2 * sliderWidth // 为了营造无缝轮播的效果，会把首图和尾图各复制一份
             }
             this.$refs.sliderGroup.style.width = width + 'px'
@@ -86,6 +86,7 @@ export default {
                 }
                 this.currentPageIndex = pageIndex
                 if (this.autoPlay) {
+                    clearTimeout(this.timer)
                     this._play()
                 }
                 /* scrollEnd 触发时机：滚动结束。
