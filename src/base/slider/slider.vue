@@ -3,7 +3,9 @@
         <div class="slider-group" ref="sliderGroup">
             <slot></slot>
         </div>
-        <div class="dots"></div>
+        <div class="dots">
+            <span class="dot" :class="{active: currentPageIndex === index}" v-for="(item, index) in dots"></span>
+        </div>
     </div>
 </template>
 
@@ -27,16 +29,25 @@ export default {
     },
     data () {
         return {
-            currentPageIndex: 0
+            currentPageIndex: 0,
+            dots: []
         }
     },
     mounted () {
-        console.log(1)
         setTimeout(() => {
             this._setSliderWidth()
+            this._initDots()
             this._initSlider()
             this._play()
         }, 20)
+        // 屏幕大小改变时图片的大小没有改变，造成粘连的效果
+        window.addEventListener('resize', () => {
+            if (!this.slider) {
+                return
+            }
+            this._setSliderWidth()
+            this.slider.refresh()
+        })
     },
     methods: {
         // 计算轮播图所有图片的宽度
@@ -46,7 +57,7 @@ export default {
             let width = 0
             // 单个轮播图的宽度
             let sliderWidth = this.$refs.slider.clientWidth  // clientWidth: 是元素内容区宽度加上左右内边距宽度
-            for (var i = 0; i < this.children.length; i++) {
+            for (let i = 0; i < this.children.length; i++) {
                 let child = this.children[i]
                 addClass(child, 'slider-item')
                 child.style.width = sliderWidth + 'px'
@@ -62,14 +73,14 @@ export default {
             this.slider = new BScroll(this.$refs.slider, {
                 scrollX: true, // 当设置为 true 的时候，可以开启横向滚动
                 scrollY: false,
-                momentum: true, // 当快速在屏幕上滑动一段距离的时候，会根据滑动的距离和时间计算出动量，并生成滚动动画。设置为 true 则开启动画
+                momentum: false, // 当快速在屏幕上滑动一段距离的时候，会根据滑动的距离和时间计算出动量，并生成滚动动画。设置为 true 则开启动画(设置true时会造成图片无法按需轮播)
                 snap: true,
                 snapLoop: this.loop,
                 snapThreshold: 0.3,
                 snapSpeed: 400
             })
             this.slider.on('scrollEnd', () => {
-                let pageIndex = this.slider.getCurrentPage.pageX
+                let pageIndex = this.slider.getCurrentPage().pageX
                 if (this.loop) {
                     pageIndex -= 1
                 }
@@ -89,7 +100,7 @@ export default {
         // 自动播放
         _play () {
             let pageIndex = this.currentPageIndex + 1
-            if (this.autoPlay) {
+            if (this.loop) {
                 pageIndex += 1
             }
             this.timer = setTimeout(() => {
@@ -98,6 +109,10 @@ export default {
             /* goToPage(x, y, time, easing) 用于滚动到指定的页面
                 x: x轴的页数，y：y轴的页数，time：动画执行的时间，easing：缓动函数
             */
+        },
+        // 初始化圆点
+        _initDots () {
+            this.dots = new Array(this.children.length)
         }
     }
 }
