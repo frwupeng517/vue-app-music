@@ -22,7 +22,7 @@
 
 <script>
 import BScroll from 'better-scroll'
-import {getRecommend} from 'api/recommend'
+import {getRecommend, getDiscList} from 'api/recommend'
 import {ERR_OK} from 'api/config'
 import Slider from 'base/slider/slider'
 export default {
@@ -37,25 +37,28 @@ export default {
     },
     created () {
         this._getRecommend()
-        // this._getDiscList()
+        this._getDiscList()
     },
     methods: {
+        // 获取轮播图数据
         _getRecommend () {
             getRecommend().then((res) => {
                 if (res.code === ERR_OK) {
                     this.recommends = res.data.slider
-                    console.log(this.recommends)
+                    // console.log(this.recommends)
                 }
             })
+        },
+        // 获取歌单列表
+        _getDiscList () {
+            getDiscList().then((res) => {
+                console.log('res--->' + res)
+                // if (res.code === ERR_OK) {
+                //     this.discList = res.data.list
+                //     console.log(`this.discList${res}`)
+                // }
+            })
         }
-        // _getDiscList () {
-        //     getDiscList().then((res) => {
-        //         if (res.code === ERR_OK) {
-        //             this.discList = res.data.list
-        //             console.log(`this.discList${this.discList}`)
-        //         }
-        //     })
-        // },
     }
 }
 </script>

@@ -37,6 +37,8 @@ export function getSongList (disstid) {
 
 export function getDiscList () {
     const url = '/api/getDiscList'
+
+    // HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器我是从哪个页面链接过来的，服务器基此可以获得一些信息用于处理
     
     const data = Object.assign({}, commonParams, {
         platform: 'yqq',
@@ -49,6 +51,7 @@ export function getDiscList () {
         rnd: Math.random(),
         format: 'json'
     })
+    // return jsonp(url, data, options)
     
     return axios.get(url, {
         params: data

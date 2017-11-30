@@ -49,6 +49,17 @@ export default {
             this.slider.refresh()
         })
     },
+    beforeDestroy () { // 在实例销毁之前调用，清除定时器，优化性能
+        clearTimeout(this.timer)
+    },
+    activated () { // keep-alive 组件激活时调用
+        if (this.autoPlay) {
+            this._play()
+        }
+    },
+    deactivated () { // keep-alive 组件停用时调用
+        clearTimeout(this.timer)
+    },
     methods: {
         // 计算轮播图所有图片的宽度
         _setSliderWidth (isResize) {
