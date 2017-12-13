@@ -1,6 +1,6 @@
 <template>
-    <div class="rank">
-        歌手
+    <div class="search">
+        search
     </div>
 </template>
 

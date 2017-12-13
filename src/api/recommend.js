@@ -19,7 +19,7 @@ export function getRecommend () {
 }
 
 export function getSongList (disstid) {
-    const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
+    const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg?'
 
     const data = Object.assign({}, commonParams, {
         disstid,
@@ -38,7 +38,8 @@ export function getSongList (disstid) {
 export function getDiscList () {
     const url = '/api/getDiscList'
 
-    // HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器我是从哪个页面链接过来的，服务器基此可以获得一些信息用于处理
+    // HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，告诉服务器我是从哪个页面链接过来的，
+    // 服务器基此可以获得一些信息用于处理
     
     const data = Object.assign({}, commonParams, {
         platform: 'yqq',

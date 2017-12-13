@@ -1,11 +1,19 @@
 <template>
-    <div class="rank">
-        歌手
+    <div class="singer">
+        
     </div>
 </template>
 
 <script>
+export default {
+    data () {
+        return {
 
+        }
+    },
+    methods: {
+    }
+}
 </script>
 
 <style lang="scss" scoped>
