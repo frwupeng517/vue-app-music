@@ -45,7 +45,7 @@ export default {
             if (!this.slider) {
                 return
             }
-            this._setSliderWidth(true) // isResize 每次窗口大小改变会重新计算宽度，宽度就会加2张，为了避免所以这里取值为true
+            this._setSliderWidth(true) // isResize 每次窗口大小改变会重新计算宽度，宽度就会加2张，为了避免所以这里取值为true 
             this.slider.refresh()
         })
     },
@@ -90,6 +90,7 @@ export default {
                 snapThreshold: 0.3,
                 snapSpeed: 400
             })
+            // 初始化CurentPageIndex
             this.slider.on('scrollEnd', () => {
                 let pageIndex = this.slider.getCurrentPage().pageX
                 if (this.loop) {

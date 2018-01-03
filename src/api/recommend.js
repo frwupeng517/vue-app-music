@@ -52,7 +52,6 @@ export function getDiscList () {
         rnd: Math.random(),
         format: 'json'
     })
-    // return jsonp(url, data, options)
     
     return axios.get(url, {
         params: data

@@ -22,7 +22,7 @@ export default function jsonp (url, data, option) { // url是一个完整的路�
     })
 }
 
-export function param (data) {
+function param (data) {
     let url = ''
     for (var k in data) {
         let value = data[k] !== undefined ? data[k] : ''
