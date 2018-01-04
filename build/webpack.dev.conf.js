@@ -82,6 +82,7 @@ module.exports = new Promise((resolve, reject) => {
 
 apiRoutes.get('/getDiscList', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
+  console.log('req'+req)
   axios.get(url, {
     headers: {
       referer: 'https://c.y.qq.com/',
