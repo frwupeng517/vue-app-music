@@ -12,7 +12,7 @@
                         </div>
                     </slider>
                 </div>
-                <div class="recommend-list">
+                <!-- <div class="recommend-list">
                     <h2 class="list-title">电台</h2>
                     <ul class="list-container">
                         <li v-for="radio in radioList" class="item">
@@ -27,19 +27,19 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <div class="recommend-list">
                     <h1 class="list-title">热门歌单</h1>
                     <ul class="list-container">
                         <li v-for="disc in discList" class="item">
                             <a :href="songListUrl+disc.id">
                                 <div class="list-media">
-                                    <img v-lazy="disc.picUrl" alt="">
+                                    <img width="60" height="60" v-lazy="disc.picUrl" alt="">
                                     <span class="icon icon-play"></span>
                                 </div>
                                 <div class="list-info">
-                                    <h3>{{disc.songListDesc}}</h3>
-                                    <p>{{disc.songListAuthor}}</p>
+                                    <h3 class="name">{{disc.songListDesc}}</h3>
+                                    <p class="desc">{{disc.songListAuthor}}</p>
                                 </div>
                             </a>
                         </li>
@@ -120,54 +120,45 @@ export default {
             .list-title{
                 height: 65px;
                 line-height: 65px;
-                text-align: left;
+                text-align: center;
                 font-size: $font-size-medium-x;
                 color: $color-theme;
             }
             .list-container{
-                font-size: 0;
                 .item{
-                    display: inline-block;
-                    vertical-align: top;
-                    box-sizing: border-box;
-                    width: 50%;
-                    padding-right: 8px;
-                    margin-bottom: 10px;
                     >a{
-                        display: block;
+                        display: flex;
+                        box-sizing: border-box;
+                        align-items: center;
+                        padding: 0 20px 20px;
                     }
                     .list-media{
                         position: relative;
-                        margin-bottom: 5px;
-                        img{
-                            width: 100%;
-                        }
+                        flex: 0 0 60px;
+                        width: 60px;
+                        padding-right: 20px;
                         .icon{
                             position: absolute;
+                            right: 25px;
                             bottom: 5px;
-                            right: 5px;
-                            display: block;
-                            width: 24px;
-                            height: 24px;
-                            z-index: 10;
-                            font-size: 22px;
+                            color: #fff;
+                            z-index: 100;
                         }
                     }
                     .list-info{
-                        padding: 0 7px 5px;
-                        h3{
-                            height: 36px;
-                            line-height: 18px;
-                            text-align: left;
-                            font-size: $font-size-medium;
-                            color: $color-theme;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        flex: 1;
+                        line-height: 20px;
+                        overflow: hidden;
+                        font-size: $font-size-medium;
+                        .name{
+                            margin-bottom: 10px;
+                            color: $color-text;
                         }
-                        p{
-                            font-size: $font-size-small;
-                            color: $color-theme;
+                        .desc{
+                            color: $color-text-d;
                         }
                     }
                 }
