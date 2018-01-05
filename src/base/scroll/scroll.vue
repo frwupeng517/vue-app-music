@@ -56,10 +56,12 @@ export default {
             })
         },
         // 代理better-scroll的enable方法
+        // 作用：启用 better-scroll
         enable () {
             this.scroll && this.scroll.enable()
         },
         // 代理better-scroll的disable方法
+        // 作用：禁用 better-scroll
         disable () {
             this.scroll && this.scroll.disable()
         },
