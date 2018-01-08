@@ -4,12 +4,9 @@ import originalJsonp from 'jsonp'
     利用jsonp插件和promise封装一个新的jsonp方法
 */
 export default function jsonp (url, data, option) { // url是一个完整的路径
-    console.log(`originalUrl--->${url}`)
     // originalUrl--->https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg    
-    console.log(data)
     // {g_tk: 1928093487, inCharset: "utf-8", outCharset: "utf-8", notice: 0, format: "jsonp"…}
     url += (url.indexOf('?') === -1 ? '?' : '&') + param(data)
-    console.log(`formatUrl--->${url}`)
     // formatUrl--->https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=192…f-8&outCharset=utf-8&notice=0&format=jsonp&platform=h5&uin=0&needNewCode=1
     return new Promise((resolve, reject) => {
         originalJsonp(url, option, (err, data) => {
